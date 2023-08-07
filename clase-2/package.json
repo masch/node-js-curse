@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon 1.http.js"
+    "dev:1": "nodemon 1.http.js",
+    "dev:2": "nodemon 2.routing.js"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

@@ -19,6 +19,29 @@ const processRequest = (req, res) => {
           return res.end("404 not found");
         }
       }
+
+    case "POST":
+      switch (url) {
+        case "/pokemon": {
+          let body = "";
+
+          // escuchar evento data
+          req.on("data", (chunk) => {
+            body += chunk.toString();
+          });
+
+          req.on("end", () => {
+            const data = JSON.parse(body);
+            res.writeHead(201, {
+              "Content-Type": "application/json; charset=utf-8",
+            });
+            res.end(JSON.stringify(data));
+            º;
+          });
+
+          break;
+        }
+      }
   }
 };
 

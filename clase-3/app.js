@@ -1,14 +1,11 @@
 const express = require("express"); // require --> comonJS
 const crypt = require("node:crypto");
 const movies = require("./movies.json");
+const { validateMovie } = require("./schemas/movies");
 
 const app = express();
-app.use(express.json);
+app.use(express.json());
 app.disable("x-powered-by");
-
-app.get("/", (req, res) => {
-  res.json({ message: "hola mundo" });
-});
 
 // Todos los rescursos que sean MOVIES se identifican con /movies
 app.get("/movies", (req, res) => {
@@ -34,17 +31,15 @@ app.get("/movies/:id", (req, res) => {
 });
 
 app.post("/movies", (req, res) => {
-  const { title, genre, director, year, duration, rate, poster } = req.body;
+  const result = validateMovie(req.body);
+
+  if (result.error) {
+    return res.status(422).json({ error: JSON.parse(result.error.message) });
+  }
 
   const newMovie = {
     id: crypt.randomUUID(),
-    title,
-    genre,
-    director,
-    year,
-    duration,
-    rate: rate ?? 0,
-    poster,
+    ...result.data,
   };
 
   // Esto no es REST, porque estamos guardando el estado en memoria

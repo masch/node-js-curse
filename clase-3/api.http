@@ -24,3 +24,11 @@ Content-Type: application/json
     "Drama"
   ]
 }
+
+### Actualizar una movie
+PATCH http://localhost:1234/movies/5ad1a235-0d9c-410a-b32b-220d91689a08
+Content-Type: application/json
+
+{
+  "year": 2021
+}
